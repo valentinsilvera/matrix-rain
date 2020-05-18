@@ -6,4 +6,9 @@
 
 Work for a client.
 
+### Installation:
+
+- Clone this repo to your local machine or download the ZIP.
+- Run index.html.
+
 [Based on this project](https://github.com/emilyxxie/green_rain)
