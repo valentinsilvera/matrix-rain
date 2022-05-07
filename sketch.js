@@ -1,6 +1,6 @@
 var streams = [];
 var fadeInterval = 1.6;
-var symbolSize = 25;
+var symbolSize = 12;
 
 function setup() {
   createCanvas(
@@ -18,12 +18,12 @@ function setup() {
   }
 
   textFont('Consolas');
-  textSize(symbolSize-1);
+  textSize(symbolSize - 1);
 }
 
 function draw() {
   background(0, 150);
-  streams.forEach(function(stream) {
+  streams.forEach(function (stream) {
     stream.render();
   });
 }
@@ -40,22 +40,20 @@ function Symbol(x, y, speed, first, opacity, color) {
 
   this.switchInterval = round(random(5, 25));
 
-  this.setToRandomSymbol = function() {
+  this.setToRandomSymbol = function () {
     var charType = round(random(0, 5));
     if (frameCount % this.switchInterval == 0) {
       if (charType > 1) {
         // set it to Katakana
-        this.value = String.fromCharCode(
-          0x30A0 + floor(random(0, 97))
-        );
+        this.value = String.fromCharCode(1024 + floor(random(0, 86)));
       } else {
         // set it to numeric
-        this.value = floor(random(0,10));
+        this.value = floor(random(0, 10));
       }
     }
   }
 
-  this.rain = function() {
+  this.rain = function () {
     this.y = (this.y >= height) ? 0 : this.y += this.speed;
   }
 
@@ -63,14 +61,14 @@ function Symbol(x, y, speed, first, opacity, color) {
 
 function Stream() {
   this.symbols = [];
-  this.totalSymbols = round(random(5, 35));
-  this.speed = random(3, 10);
+  this.totalSymbols = round(random(40, 70));
+  this.speed = random(0.5, 1.5);
 
-  this.generateSymbols = function(x, y) {
+  this.generateSymbols = function (x, y) {
     var opacity = 255;
     var first = round(random(0, 4)) == 1;
-    var color = round(random(0,4));
-    for (var i =0; i <= this.totalSymbols; i++) {
+    var color = round(random(0, 9));
+    for (var i = 0; i <= this.totalSymbols; i++) {
       symbol = new Symbol(
         x,
         y,
@@ -87,20 +85,12 @@ function Stream() {
     }
   }
 
-  this.render = function() {
-    this.symbols.forEach(function(symbol) {
+  this.render = function () {
+    this.symbols.forEach(function (symbol) {
       if (symbol.first) {
         fill(256, 236, 256, symbol.opacity);
-      } else if (symbol.color == 1) {
-        fill(255, 159, 26, symbol.opacity); //orange
-      } else if (symbol.color == 2) {
-        fill(24, 220, 255, symbol.opacity); //blue
-      } else if (symbol.color == 3) {
-        fill(125, 95, 255, symbol.opacity); //purple
-      } else if (symbol.color == 4) {
-        fill(255, 242, 0, symbol.opacity); //yellow
       } else {
-        fill(50, 255, 126, symbol.opacity); //green
+        fill(0, 255, 0, symbol.opacity); //green
       }
       text(symbol.value, symbol.x, symbol.y);
       symbol.rain();
